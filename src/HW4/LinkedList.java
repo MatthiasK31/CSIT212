@@ -1,3 +1,9 @@
+/*
+Matthias Kim
+HW4 - Queue/Stack/LinkedList
+3/3/23
+ */
+
 package HW4;
 
 public class LinkedList {
@@ -48,6 +54,8 @@ public class LinkedList {
 
         if(x.next != null)
             x.next.prev = x.prev;
+
+        head = x;
     }
 
     /*
