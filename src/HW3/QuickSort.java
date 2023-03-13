@@ -19,27 +19,30 @@ public class QuickSort {
     }
 
     public static int partition(int[] array, int l, int r) {
+        //set pivot value and pivot index
         int pivot = array[r];
-        int i = l - 1;
+        int i = l;
 
-        for (int j = l; j < r - 1; j++) {
+        //iterate through section and swap values if it is less than the pivot value
+        for (int j = l; j < r; j++) {
             if (array[j] < pivot) {
+                swap(array, j, i);
                 i++;
-                swap(array, i, j);
             }
         }
 
-        swap(array, i + 1, r);
-        return i + 1;
+        swap(array, i, r);
+        return i;
     }
 
-    public static void swap(int[] arr, int i, int j) {
+    public static void swap(int[] arr, int i, int j) { //method to swap
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
 
     public static int[] counting_sort(int[] a, int k) {
+        //set length variable and initialize b and c arrays
         int n = a.length;
         int[] b = new int[n];
         int[] c = new int[k + 1];
@@ -61,22 +64,9 @@ public class QuickSort {
 
         //sort
         for (int j = a.length - 1; j >= 0; j--) {
-            b[c[a[j]]] = a[j];
-            c[a[j]] = c[a[j]] - 1;
+            b[--c[a[j]]] = a[j];
         }
 
-        for (int i = 0; i < a.length; i++) {
-            System.out.print(a[i] + "   ");
-        }
-        System.out.println();
-        for (int i = 0; i < b.length; i++) {
-            System.out.print(b[i] + "   ");
-        }
-        System.out.println();
-        for (int i = 0; i < c.length; i++) {
-            System.out.print(c[i] + "   ");
-        }
-        System.out.println();
         return b;
     }
 
@@ -128,7 +118,7 @@ public class QuickSort {
 
     public static void main(String[] args) {
 // TODO Auto-generated method stub
-        int k = 10;
+        int k = 100000;
         System.out.println("Quick sort starts ------------------");
         for (int n = 100000; n <= 1000000; n = n + 100000) {
             int[] array = QuickSort.generate_random_array(n);
@@ -141,7 +131,7 @@ public class QuickSort {
         }
         System.out.println("Quick sort ends ------------------");
         System.out.println("Counting sort starts ------------------");
-        for (int n = 10; n <= 100; n = n + 10) {
+        for (int n = 100000; n <= 1000000; n = n + 100000) {
             int[] array = QuickSort.generate_random_array(n, k);
             long t1 = System.currentTimeMillis();
             array = QuickSort.counting_sort(array, k);
