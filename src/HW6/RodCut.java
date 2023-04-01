@@ -1,12 +1,19 @@
 package HW6;
 
+/*
+Matthias Kim
+HW#6
+3/31/2023
+ */
+
+
 public class RodCut {
     int n;
     int[] p;
     int[] r;
     int[] s;
 
-    public RodCut () {
+    public RodCut() {
         n = 10;
         p = new int[11];
         p[0] = 0;
@@ -22,25 +29,66 @@ public class RodCut {
         p[10] = 30;
     }
 
-    public int memoized_cut_rod () {
+    public int memoized_cut_rod() {
+        int[] r = new int[n + 1];
 
-
+        //fill r array with -1
+        for (int i = 0; i <= n; i++) {
+            r[i] = -1;
+        }
+        return memoized_cut_rod_aux(p, n, r);
     }
 
-    public int memoized_cut_rod_aux (int p[], int n, int r[]) {
-
+    public int memoized_cut_rod_aux(int p[], int n, int[] r) {
+        int q;
+        if (r[n] >= 0)
+            return r[n];
+        q = 0;
+        if (n > 0) {
+            for (int i = 1; i <= n; i++) {
+                q = Math.max(q, p[i] + memoized_cut_rod_aux(p, n - i, r));
+            }
+        }
+        r[n]=q;
+        return q;
     }
 
-    public int bottom_up_cut_rod () {
 
 
+    public int bottom_up_cut_rod() {
+        int q = 0;
+        r = new int[n + 1];
+        r[0] = 0;
+
+        for (int j = 1; j <= n; j++) {
+            q = Integer.MIN_VALUE; //since -infinity can't be a value
+            for (int i = 1; i <= j; i++) {
+                q = Math.max(q, p[i] + r[j - i]);
+            }
+            r[j] = q;
+        }
+        return r[n];
     }
 
-    public void extended_bottom_up_cut_rod () {
+    public void extended_bottom_up_cut_rod() {
+        r = new int[n + 1];
+        s = new int[n + 1];
+        int q;
+        r[0] = 0;
 
+        for (int j = 1; j <= n; j++) {
+            q = Integer.MIN_VALUE; //since -infinity can't be a value
+            for (int i = 1; i <= j; i++) {
+                if (q < p[i] + r[j - i]) {
+                    q = p[i] + r[j - i];
+                    s[j] = i;
+                }
+            }
+            r[j] = q;
+        }
     }
 
-    public void print_cut_rod_solution () {
+    public void print_cut_rod_solution() {
         for (int i = 0; i <= n; i++) {
             System.out.print(i + "\t");
         }
