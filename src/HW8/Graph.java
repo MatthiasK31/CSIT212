@@ -1,4 +1,14 @@
+/*
+Matthias Kim
+HW8
+4/21/23
+ */
+
 package HW8;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Graph {
     public int n; //number of vertice
@@ -20,10 +30,32 @@ public class Graph {
     node to s
     */
     public int[] bfs (int s) {
+        //initialize the arrays that hold the distances and colors
         int [] distances = new int[n];
-        boolean [] visited = new boolean[n];
+        int [] colors = new int[n];
 
+        Arrays.fill(distances, -1); //preset all distances to -1
+        Arrays.fill(colors, WHITE); //preset all colors to white
 
+        //create a queue
+        Queue<Integer> queue = new LinkedList<Integer>();
+
+        distances[s] = 0; //you know the distance from s to s is 0
+        colors[s] = GRAY; //s is gray
+        queue.offer(s); //insert to queue
+
+        while(!queue.isEmpty()){
+            int u = queue.poll(); //remove head
+            for (int i = 0; i < n; i++) {
+                if (A[u][i] == 1 && colors[i] == WHITE){ //if i is a neighbor of u and i is undiscovered
+                    distances[i] = distances[u] + 1;
+                    colors[i] = GRAY;
+                    queue.offer(i);
+                }
+            }
+            colors[u] = BLACK;
+        }
+        return distances; //return
     }
     public void print_array (int[] array) {
         for (int i = 0; i < array.length; i++)
