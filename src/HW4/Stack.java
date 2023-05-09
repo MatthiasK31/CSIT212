@@ -36,6 +36,9 @@ public class Stack {
      * Implement the Push(S, x) function
      */
     public void push (int x) {
+        if (top == size -1) //extra credit: detect if stack is above capacity.
+            System.err.println("Error: Stack overflow detected.");
+
         top = top + 1;
         array[top] = x;
     }
@@ -75,9 +78,12 @@ public class Stack {
         Stack s;
 
         s = new Stack(10);
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
             s.push(i);
         System.out.println(s.toString());
+
+        //extra credit:
+        s.push(13); //to test overflow detector
 
         for (int i = 0; i < 2; i++)
             s.pop();

@@ -72,7 +72,7 @@ public class Queue {
         Queue q;
 
         q = new Queue(10);
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
             q.enqueue(i);
         System.out.println(q.toString());
         for (int i = 0; i < 2; i++)
